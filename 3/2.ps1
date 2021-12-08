@@ -1,16 +1,21 @@
-$lines = get-Content example.txt
+$lines = get-Content input.txt
 $pos = 0
-$oxygenLines = $lines
-while ($oxygenLines.count -ne 1){
-    write-host $oxygenLines
-    $oxygenLines = $oxygenLines | group-object {$_[$pos]} | sort -property Count,Name -descending | select-object -first 1 -expandproperty group
+$oxygenNumbers = $lines
+while ($oxygenNumbers.count -ne 1){
+    $oxygenNumbers = $oxygenNumbers | group-object {$_[$pos]} | sort -property Count,Name -descending | select-object -first 1 -expandproperty group
     $pos +=1
 }
-write-host $oxygenLines
+
+$pos=0
+$scrubberNumbers = $lines
+while ($scrubberNumbers.count -ne 1){
+    $scrubberNumbers = $scrubberNumbers | group-object {$_[$pos]} | sort -property Count,Name | select-object -first 1 -expandproperty group
+    $pos +=1
+}
+
+write-host $scrubberNumbers
 
 
-# $oxygen = [convert]::ToInt32($oxygenLines,2)
-# $scrubber = [convert]::ToInt32($scrubberLines,2)
-# write-host "Oxygen $($oxygen), Scrubber $($scrubber), Value $($oxygen*$scrubber)"
-
-#3206016 was to low
+$oxygen = [convert]::ToInt32($oxygenNumbers,2)
+$scrubber = [convert]::ToInt32($scrubberNumbers,2)
+write-host "Oxygen $($oxygen), Scrubber $($scrubber), Value $($oxygen*$scrubber)"
