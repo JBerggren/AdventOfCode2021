@@ -13,7 +13,7 @@ for($row = 0;$row -lt $lines.count;$row+=1){
         $currentBoard.index = $nrs | %{$currentBoard.board.indexof($_)}
 
         for($turns=$leastTurns;$true;$turns--){
-            $vertical = $currentBoard.index[0..($turns-1)] | where {$_ -gt -1} |  %{($_+1)%6} | group | sort -property count -descending| select -first 1 -expandproperty count
+            $vertical = $currentBoard.index[0..($turns-1)] | where {$_ -gt -1} |  %{($_)%5} | group | sort -property count -descending| select -first 1 -expandproperty count
             $horizontal = $currentBoard.index[0..($turns-1)] | where {$_ -gt -1} | %{[Math]::floor(($_)/5)} | group | sort -property count -descending | select -first 1 -expandproperty count
             if($horizontal -ne 5 -and $vertical -ne 5){
                 break
@@ -28,7 +28,6 @@ for($row = 0;$row -lt $lines.count;$row+=1){
         $currentBoard = ""
     }
 }
-write-host $leastTurns
 $sum = 0
 $turnIndexes = $leastTurnsBoard.index[0..($leastTurns-1)]
 $leastTurnsBoard.board | where { $turnIndexes -notcontains $leastTurnsBoard.board.indexof($_)} | %{$sum+=$_}
