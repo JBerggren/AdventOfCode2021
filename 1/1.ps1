@@ -1,4 +1,4 @@
-$lines = get-Content input.txt
+$lines = get-Content input.txt | %{[int]$_.Trim()}
 $i=1
 $sum=0
 
