@@ -9,7 +9,7 @@ $currentBoard = ""
 for($row = 0;$row -lt $lines.count;$row+=1){
     $currentBoard += " " + $lines[$row]
     if(($row+1)%6 -eq 5){
-        $currentBoard = @{ board=$currentBoard.split(" ",40,1);index=[int[]]::new(25);turns=50}
+        $currentBoard = @{ board=$currentBoard.split(" ",40,1);index=[int[]]::new(25)}
         $currentBoard.index = $nrs | %{$currentBoard.board.indexof($_)}
 
         for($turns=$leastTurns;$true;$turns--){
@@ -18,10 +18,10 @@ for($row = 0;$row -lt $lines.count;$row+=1){
             if($horizontal -ne 5 -and $vertical -ne 5){
                 break
             }
-            $currentBoard.turns = $turns
         }
-        if($currentBoard.turns -lt $leastTurns){
-            $leastTurns = $currentBoard.turns
+        $turns +=1
+        if(($turns-1) -lt $leastTurns){
+            $leastTurns = $turns
             $leastTurnsBoard = $currentBoard
         }
         $row+=1
